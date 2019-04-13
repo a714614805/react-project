@@ -1,33 +1,28 @@
 .App {
   text-align: center;
+  position:relative;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
+@keyframes init {
   from {
-    transform: rotate(0deg);
+    width:100%;
   }
   to {
-    transform: rotate(360deg);
+    width:0;
+    display:none;
   }
+}
+.beforeLoad{
+  width:0;height:100%;position:absolute;right:0;top:0;
+  background-color:rgba(0,0,0,0.8);animation : init1 linear 2s;
+  font-size:50px;text-align: center;color:black;text-shadow: 3px 3px 4px black;line-height:100%;
+}
+.intTop{
+  width:500px;height:600px;color:black;font-size:16px;font-weight:400;text-shadow: 1px 1px 1px black;
+}
+@keyframes init1 {
+  0%{width:100%;border-radius: 0;left:0;height:calc(width);font-size:50px;display:block;}
+  25%{width:75%; border-radius:50%;left:12.5%;height:calc(width);top:12.5%;font-size:30px;}
+  50%{ width:50%; border-radius: 100%;left:25%;height:calc(width);top:25%;font-size:20px;}
+  75%{ width:25%; border-radius:100%;left:37.5%;height:calc(width);top:37.5%;font-size:12px;}
+  100%{ width:0%; border-radius:100%;left:50%;height:0;top:50%;font-size:0;};
 }
