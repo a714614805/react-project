@@ -19,7 +19,7 @@
   font-size:50px;text-align: center;color:black;text-shadow: 3px 3px 4px black;line-height:calc(height);
 }
 .intTop{
-  width:500px;height:600px;color:black;font-size:16px;font-weight:400;text-shadow: 1px 1px 1px black;
+  width:500px;height:20px;color:black;font-size:16px;font-weight:400;text-shadow: 1px 1px 1px black;
 }
 @keyframes init1 {
   0%{width:100%;border-radius: 0;left:0;height:calc(width);font-size:50px;display:block;line-height: calc(height);}
