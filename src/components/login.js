@@ -10,6 +10,14 @@ class LoginForm extends Component {
   handlePushRegister = ()=>{
     this.props.history.push('/register');
   }
+  handleSubmit =()=>{
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        console.log(values);   //表单里面的数据，json形式..
+      }
+    });
+    
+  } 
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
@@ -38,16 +46,16 @@ class LoginForm extends Component {
       <div className="body">
         <div className='loginBox'>
           <div className='form'>
-            <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+            <Form {...formItemLayout}>
               <Form.Item label="用户名">
-                {getFieldDecorator('userName', {
+                {getFieldDecorator('uname', {
                   rules: [{ required: true, message: 'Please input your username!' }],
                 })(
                   <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />
                 )}
               </Form.Item>
               <Form.Item label="密码">
-                {getFieldDecorator('password', {
+                {getFieldDecorator('upwd', {
                   rules: [{ required: true, message: 'Please input your Password!' }],
                 })(
                   <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />
@@ -61,11 +69,13 @@ class LoginForm extends Component {
                   <Checkbox>记住我</Checkbox>
                 )}
               </Form.Item>
+              <Form.Item>
+                <Button type="primary" style={{width:'250px',marginLeft:'10px'}} onClick={this.handleSubmit}>
+                    登录
+                </Button>
+              </Form.Item>
             </Form>
-            <Button type="primary" htmlType="submit" size="large" style={{width:'250px',marginLeft:'10px'}}>
-                  登录
-            </Button>
-            <div style={{marginTop:'20px',}}><a  onClick={this.handlePushRegister}>立即注册</a></div>
+            <div style={{marginTop:'20px',}}><a onClick={this.handlePushRegister}>立即注册</a></div>
           </div>
         </div>
       </div>

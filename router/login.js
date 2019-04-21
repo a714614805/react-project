@@ -6,7 +6,6 @@ var router=express.Router();
 router.get('/login',(req,res)=>{
   //获取浏览器请求的数据
   var obj=req.query;
-  //console.log(obj);
   var $uname=obj.uname;
   if(!$uname){//如果用户名为空
     res.send("用户名不能为空");
@@ -19,11 +18,11 @@ router.get('/login',(req,res)=>{
   }
   //执行判断是否登录成功——用户名和密码同时正确
   //查询数据，查询的结果中，要有对应的记录
-  var sql='SELECT * FROM zp_user WHERE uname=? AND upwd=?';
+  var sql='SELECT * FROM by_users WHERE users_account=? AND user_password=?';
   pool.query(sql,[$uname,$upwd],(err,result)=>{
     if(err) throw err;
 	if(result.length>0){
-	  res.send('登陆成功');
+	  res.send(result);
 	}else{
 	  res.send('登录失败，请核对您的账号密码');
 	}
