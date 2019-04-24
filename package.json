@@ -6,12 +6,14 @@
     "antd": "^3.16.2",
     "lazy-load-component": "^1.1.5",
     "moment": "^2.24.0",
+    "mysql": "^2.17.1",
     "node-sass": "^4.11.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.5"
+    "react-scripts": "2.1.5",
+    "setprototypeof": "^1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

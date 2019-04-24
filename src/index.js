@@ -18,7 +18,7 @@ render(
 	<LocaleProvider>
 			<BrowserRouter>
 				<Switch>
-					<Route exact path='/' component={Login} />
+					<Route exact path='/login' component={Login} />
 					<Route path='/register' component={Register} />
 					<App>
 						<Switch>

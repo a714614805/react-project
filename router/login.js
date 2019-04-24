@@ -9,12 +9,12 @@ router.get('/login',(req,res)=>{
   var $uname=obj.uname;
   if(!$uname){//如果用户名为空
     res.send("用户名不能为空");
-	return;
+	  return;
   }
   var $upwd=obj.upwd;
   if(!$upwd){
     res.send("密码不能为空");
-	return;
+	  return;
   }
   //执行判断是否登录成功——用户名和密码同时正确
   //查询数据，查询的结果中，要有对应的记录

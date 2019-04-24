@@ -15,6 +15,7 @@ class LoginForm extends Component {
       if (!err) {
         console.log(values);   //表单里面的数据，json形式..
       }
+      fetch(`http://localhost:2000/login?uname=${values.uname}&upwd=${values.upwd}`,{method:'GET'}).then((res)=>{res.json().then(data=>{console.log(data)})})
     });
     
   } 
