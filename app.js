@@ -23,6 +23,8 @@ app.all('*', function(req, res, next) {
   res.header("Content-Type", "application/json;charset=utf-8");
   next();
   });
+
+    // 登录的后台接口
       app.get('/login',(req,res)=>{
         //获取浏览器请求的数据
         var obj=req.query;
@@ -42,15 +44,16 @@ app.all('*', function(req, res, next) {
         pool.query(sql,[$uname,$upwd],(err,result)=>{
           if(err) throw err;
         if(result.length>0){
-          console.log(result);
           res.send(result);
         }else{
           res.send('登录失败，请核对您的账号密码');
         }
         });
       });
+
+
+      //注册的后台接口
       app.post('/register',(req,res)=>{
-        console.log(req.params);
         res.send(req.body);
       })
 
