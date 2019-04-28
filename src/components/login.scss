@@ -1,11 +1,14 @@
 .body{
     background-image: url('./pic/background0.jpg');
     background-size: cover;
-    margin-top:100px;
-    height:600px;
+    height:700px;
     position:relative;
     .form{
-        background-color: white;padding:50px 20px 50px 0px;
-        position:absolute;top:100px;right:50px;border-radius: 5px;
+        background-color: white;padding:50px 20px 50px 0px;width:400px;
+        position:absolute;top:150px;right:150px;border-radius: 5px;
+    }
+    .registerForm{
+        background-color: white;padding:50px 20px 50px 0px;width:400px;
+        position:absolute;top:50px;right:150px;border-radius: 5px;
     }
 }

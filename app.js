@@ -5,7 +5,16 @@ const pool=require('./pool.js');
 
 //1.构建web服务器
 var app=express();
+//监听端口2000
 app.listen(2000);
+//2.托管静态资源
+app.use(express.static('./src'));
+app.use(bodyParser.json());//数据JSON类型
+//使用body-parser中间件
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+//跨域配置
 app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -14,9 +23,6 @@ app.all('*', function(req, res, next) {
   res.header("Content-Type", "application/json;charset=utf-8");
   next();
   });
-app.get('/',(req,res)=>{
-  res.send('this is a text');
-});
       app.get('/login',(req,res)=>{
         //获取浏览器请求的数据
         var obj=req.query;
@@ -43,12 +49,11 @@ app.get('/',(req,res)=>{
         }
         });
       });
-//2.托管静态资源
-app.use(express.static('./src'));
-//使用body-parser中间件
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+      app.post('/register',(req,res)=>{
+        console.log(req.params);
+        res.send(req.body);
+      })
+
 //使用路由器
 //把用户路由器挂载到/user下
 app.use('/login',user);

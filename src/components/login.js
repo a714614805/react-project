@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import 'antd/lib/date-picker/style/css';
 import 'antd/dist/antd.css';
+import axios from 'axios';
 import {
-  Form, Icon, Input, Button, Checkbox,
+  Form, Icon, Input, Button, Checkbox,message
 } from 'antd';
 import './login.scss';
 class LoginForm extends Component {
+  state={
+    userData : [],
+  }
 
   handlePushRegister = ()=>{
     this.props.history.push('/register');
@@ -15,9 +19,15 @@ class LoginForm extends Component {
       if (!err) {
         console.log(values);   //表单里面的数据，json形式..
       }
-      fetch(`http://localhost:2000/login?uname=${values.uname}&upwd=${values.upwd}`,{method:'GET'}).then((res)=>{res.json().then(data=>{console.log(data)})})
+      axios.get(`/login?uname=${values.uname}&upwd=${values.upwd}`).then(res=>{
+        console.log(res)
+        if(res.data[0].user_password)
+        this.props.history.push(`/index?uname=${res.data[0].tid}`)
+        else{
+          message.error(res.data);
+        }
+      })
     });
-    
   } 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -71,12 +81,12 @@ class LoginForm extends Component {
                 )}
               </Form.Item>
               <Form.Item>
-                <Button type="primary" style={{width:'250px',marginLeft:'10px'}} onClick={this.handleSubmit}>
+                <Button type="primary" style={{width:'260px',marginLeft:'60px'}} onClick={this.handleSubmit}>
                     登录
                 </Button>
               </Form.Item>
             </Form>
-            <div style={{marginTop:'20px',}}><a onClick={this.handlePushRegister}>立即注册</a></div>
+            <div style={{marginTop:'20px',textAlign:'center',cursor:'pointer',color:'#1890ff'}}><span onClick={this.handlePushRegister}>立即注册</span></div>
           </div>
         </div>
       </div>

@@ -10,8 +10,9 @@ import 'moment/locale/zh-cn';
 //顶级根目录页面
 import App from './App'
 //懒加载
-const Login = lazyLoadComponent(() => import('./App'));
+const Login = lazyLoadComponent(() => import('./components/login'));
 const Register = lazyLoadComponent(() => import('./components/register'));
+const index = lazyLoadComponent(() => import('./components/main'));
 moment.locale('zh-cn');
 
 render(
@@ -20,6 +21,7 @@ render(
 				<Switch>
 					<Route exact path='/login' component={Login} />
 					<Route path='/register' component={Register} />
+					<Route path='/index' component={index} />
 					<App>
 						<Switch>
 						</Switch>
