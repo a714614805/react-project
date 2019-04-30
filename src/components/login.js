@@ -21,9 +21,11 @@ class LoginForm extends Component {
       }
       axios.get(`/login?uname=${values.uname}&upwd=${values.upwd}`).then(res=>{
         console.log(res)
-        if(res.data[0].user_password)
-        this.props.history.push(`/index?uname=${res.data[0].tid}`)
-        else{
+        if(res.data[0].user_password  && res.data[0].user_identity == 1)
+        this.props.history.push(`/index?id=${res.data[0].tid}`)
+        else if(res.data[0].user_identity == 0){
+          this.props.history.push(`/management`)
+        }else{
           message.error(res.data);
         }
       })

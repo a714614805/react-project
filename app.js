@@ -9,11 +9,7 @@ var app=express();
 app.listen(2000);
 //2.托管静态资源
 app.use(express.static('./src'));
-app.use(bodyParser.json());//数据JSON类型
-//使用body-parser中间件
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+
 //跨域配置
 app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -23,7 +19,11 @@ app.all('*', function(req, res, next) {
   res.header("Content-Type", "application/json;charset=utf-8");
   next();
   });
-
+  app.use(bodyParser.json());//数据JSON类型
+  //使用body-parser中间件
+  app.use(bodyParser.urlencoded({
+    extended: false
+  }));
     // 登录的后台接口
       app.get('/login',(req,res)=>{
         //获取浏览器请求的数据
@@ -50,11 +50,41 @@ app.all('*', function(req, res, next) {
         }
         });
       });
-
+      //获取所有的图书信息
+      app.get('/index',(req,res)=>{
+        const sql = 'SELECT * FROM books';
+        pool.query(sql,(err,result)=>{
+          if(err) throw err;
+          res.send(result);
+          return
+        })
+      })
 
       //注册的后台接口
       app.post('/register',(req,res)=>{
-        res.send(req.body);
+        const uname = req.body.uname;
+        const upwd = req.body.upwd;
+        const phoneNumber = req.body.phoneNumber;
+        const nickName = req.body.nickName;
+        const identity = req.body.identity;   //0为管理员   1为用户
+        var sql='SELECT * FROM by_users WHERE users_account=?';
+        pool.query(sql,[uname],(err,result)=>{
+          if(err) throw err;
+          if(result.length>0){
+            res.send({code:301,msg:'用户名已被注册'});
+            return ;
+          }else{
+            var sql = 'INSERT INTO by_users VALUES(NULL,?,?,?,?,?)'
+            pool.query(sql,[uname,phoneNumber,upwd,nickName,identity],(err,result)=>{
+              if(err) throw err;
+              if(result.affectedRows>0){
+                res.send('注册成功');
+              }
+            })
+          }
+        })
+
+        
       })
 
 //使用路由器

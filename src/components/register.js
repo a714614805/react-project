@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import axios from 'axios';
 import './login.scss';
 import {
-  Form, Icon, Input, Button, Checkbox,Select,message
+  Form, Icon, Input, Button, Select, message
 } from 'antd';
 
 
@@ -16,25 +16,37 @@ class Register extends Component {
     this.props.history.push('/login')
   }
   handleSubmit = ()=>{
-    this.props.form.validateFieldsAndScroll((err,values)=>{
+    const that = this;
+    that.props.form.validateFieldsAndScroll((err,values)=>{
       if(!err)console.log('Absolutely Right')
       //验证手机号码是否全为数字
       if(/^[0-9]+$/.test(values.phoneNumber)){
         //验证手机号码是否为11位
         if(values.phoneNumber.length == 11 ){
-          //验证两次密码是否一致
-          if(values.confirm == values.upwd){
-            //验证密码长度是否为7位以上
-            if(values.upwd.length > 7){
-              console.log(values);
-              axios.post(`/register`,values).then(res=>{
-                console.log(res);
-              })
+          const reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+          if(reg.test(values.phoneNumber)){
+            //验证两次密码是否一致
+            if(values.confirm == values.upwd){
+              //验证密码长度是否为7位以上
+              if(values.upwd.length > 7){
+                console.log(values);
+                axios.post(`/register`,values).then(res=>{
+                  if(res.data.code == 301){
+                    message.error(res.data.msg)
+                  }
+                  if(res.data == '注册成功'){
+                    message.success('注册成功');
+                    that.props.history.push('/login');
+                  }
+                })
+              }else{
+                message.error('密码长度必须大于7位')
+              }
             }else{
-              message.error('密码长度必须大于7位')
+              message.error('两次密码输入不一致')
             }
           }else{
-            message.error('两次密码输入不一致')
+            message.error('手机号格式不正确');
           }
         }else{
           message.error('手机号必须为11位数字')
