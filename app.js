@@ -86,6 +86,34 @@ app.all('*', function(req, res, next) {
 
         
       })
+      //添加书籍的接口
+      app.post('/management',(req,res)=>{
+        const data = req.body;
+        const name = data.bname;
+        const price = parseFloat(data.price);
+        const author = data.author;
+        const description = data.description;
+        const url = data.url;
+        const kind = parseInt(data.kind);
+        const sql = 'INSERT INTO books VALUES(NULL,?,?,500,?,?,?,?)'
+        pool.query(sql,[name,price,author,kind,url,description],(err,result)=>{
+          if(err) throw err;
+          if(result.affectedRows>0){
+            res.send('添加成功');
+          }
+        })
+      })
+      //删除书籍的接口
+      app.get('/delete-books',(req,res)=>{
+        const id = parseInt(req.query.id);
+        const sql = 'DELETE FROM books WHERE bid=?';
+        pool.query(sql,[id],(err,result)=>{
+          if(err) throw err;
+          if(result.affectedRows>0){
+            res.send('删除成功');
+          }
+        })
+      })
 
 //使用路由器
 //把用户路由器挂载到/user下

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import 'antd/lib/date-picker/style/css';
 import 'antd/dist/antd.css';
-import { Table, Popconfirm, Button, Modal, Form } from 'antd';
+import { Table, Popconfirm, Button, Modal, Form, Input, Select, message } from 'antd';
 import './management.scss';
 import Axios from 'axios';
 
-
-class Management extends Component {
+const Option = Select.Option;
+class management extends Component {
 
     state={
         data:[],
@@ -14,6 +14,9 @@ class Management extends Component {
     }
 
     componentDidMount(){
+        this.handleGetAll();
+    }
+    handleGetAll = ()=>{
         Axios.get('/index').then(res=>{
             this.setState({
                 data:res.data
@@ -21,7 +24,15 @@ class Management extends Component {
         })
     }
     handleDelete = (record)=>{
-        console.log(record.bid);
+        const that = this;
+        Axios.get(`/delete-books?id=${record.bid}`).then(res=>{
+            if(res.data == '删除成功'){
+                message.success('删除成功');
+                that.handleGetAll();
+            }else{
+                message.error('删除失败');
+            }
+        })
     }
     handleCancle = ()=>{
         this.setState({
@@ -33,8 +44,33 @@ class Management extends Component {
             show : true,
         })
     }
+    handleOK = ()=>{
+        this.props.form.validateFieldsAndScroll((error,value)=>{
+            if(error){console.log(error)}else{
+                Axios.post('/management',value).then(res=>{
+                    if(res.data == '添加成功'){
+                        message.success('添加成功');
+                        this.handleGetAll();
+                        this.setState({show : false})
+                    }else{
+                        message.error('添加失败')
+                    }
+                })
+            }
+        })
+    }
     render(){
-        let { form } = this.props;
+        const { getFieldDecorator } = this.props.form;
+        const formItemLayout = {
+            labelCol: {
+              xs: { span: 10 },
+              sm: { span: 5 },
+            },
+            wrapperCol: {
+              xs: { span: 24 },
+              sm: { span: 16 },
+            },
+          };
         const columns = [{
             title:'书名',
             dataIndex:'book_name',
@@ -79,20 +115,63 @@ class Management extends Component {
             <div style={{marginTop:"20px",marginLeft:'50px'}}>
                 <Button type="danger" onClick={this.handleAdd}>添加书籍</Button>
             </div>
-            <Table columns={columns} dataSource={this.state.data} style={{marginTop:'30px'}}></Table>
+            <Table columns={columns} dataSource={this.state.data} style={{marginTop:'30px'}} rowKey={record => record.bid}></Table>
             <div>
-                <Modal title="添加书籍" destroyOnClose visible={this.state.show} onCancel={this.handleCancle}>
-                    <Form>
-                        <Form.Item label="书名"></Form.Item>
-                        <Form.Item label="作者"></Form.Item>
-                        <Form.Item label="价格"></Form.Item>
-                        <Form.Item label="描述"></Form.Item>
-                        <Form.Item label="图片地址"></Form.Item>
+                <Modal title="添加书籍" destroyOnClose visible={this.state.show} onCancel={this.handleCancle} onOk={this.handleOK}>
+                    <Form {...formItemLayout}>
+                        <Form.Item label="书名">
+                            {getFieldDecorator('bname', {
+                            rules: [{ required: true, message: 'Please input book name' }],
+                            })(
+                            <Input placeholder="书名" />
+                            )}
+                        </Form.Item>
+                        <Form.Item label="作者">
+                            {getFieldDecorator('author', {
+                            rules: [{ required: true, message: "Please input book's author" }],
+                            })(
+                            <Input placeholder="作者" />
+                            )}
+                        </Form.Item>
+                        <Form.Item label="价格">
+                            {getFieldDecorator('price', {
+                            rules: [{ required: true, message: "Please input book's price" }],
+                            })(
+                            <Input placeholder="价格" />
+                            )}
+                        </Form.Item>
+                        <Form.Item label="描述">
+                            {getFieldDecorator('description', {
+                            rules: [{ required: true, message: "Please input book description" }],
+                            })(
+                            <Input placeholder="描述" />
+                            )}
+                        </Form.Item>
+                        <Form.Item label="图片地址">
+                            {getFieldDecorator('url', {
+                            rules: [{ required: true, message: 'Please input book picture url' }],
+                            })(
+                            <Input placeholder="图片地址" />
+                            )}
+                        </Form.Item>
+                        <Form.Item label="图书类别">
+                            {getFieldDecorator('kind', {
+                            rules: [{ required: true, message: 'Please select the kind of the books' }],
+                            })(
+                            <Select>
+                                <Option value='1'>文学</Option>
+                                <Option value='2'>社科</Option>
+                                <Option value='3'>少儿</Option>
+                                <Option value='4'>艺术</Option>
+                                <Option value='5'>生活</Option>
+                            </Select>
+                            )}
+                        </Form.Item>
                     </Form>
                 </Modal>
             </div>
         </div>)
     }
 }
-
+const Management = Form.create()(management);
 export default Management
