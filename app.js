@@ -114,6 +114,23 @@ app.all('*', function(req, res, next) {
           }
         })
       })
+      app.post('/change',(req,res)=>{
+        const data = req.body;
+        const name = data.bname;
+        const price = parseFloat(data.price);
+        const author = data.author;
+        const id = data.bid;
+        const description = data.description;
+        const url = data.url;
+        const kind = parseInt(data.kind);
+        const sql = 'UPDATE books SET book_name=?,book_price=?,book_author=?,url=?,description=?,fk=? WHERE bid = ?'
+        pool.query(sql,[name,price,author,url,description,kind,id],(err,result)=>{
+          if(err) throw err;
+          if(result.affectedRows > 0){
+            res.send('修改成功');
+          }
+        })
+      })
 
 //使用路由器
 //把用户路由器挂载到/user下

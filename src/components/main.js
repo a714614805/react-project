@@ -22,10 +22,20 @@ class Index extends Component {
     }
     render(){
         return(<div>
-            this is index Page {this.state.books.map((item)=>{
-                return <div key={item.bid}><img src={item.url} alt='无法显示图片'></img></div>
-            })}
-        </div>)
+                <div className='title'>用户页面</div>
+                <div className='content'>
+                    {this.state.books.map((item)=>{
+                        return (<div key={item.bid} className='every'>
+                            <img src={item.url} alt='无法显示图片' style={{width:'180px',height:'200px'}}></img>
+                            <div className='right'>
+                                <div className='rightText'>{item.book_name}</div>
+                                <div className='price'>￥{item.book_price}</div>
+                                <div className='desc'>{item.description}</div>
+                            </div>
+                        </div>)
+                    })}
+                </div>
+            </div>)
     }
 }
 
