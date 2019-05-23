@@ -18,7 +18,7 @@ app.all('*', function(req, res, next) {
   res.header("X-Powered-By",' 3.2.1');
   res.header("Content-Type", "application/json;charset=utf-8");
   next();
-  });
+});
   app.use(bodyParser.json());//数据JSON类型
   //使用body-parser中间件
   app.use(bodyParser.urlencoded({
@@ -83,8 +83,6 @@ app.all('*', function(req, res, next) {
             })
           }
         })
-
-        
       })
       //添加书籍的接口
       app.post('/management',(req,res)=>{

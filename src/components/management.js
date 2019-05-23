@@ -44,7 +44,8 @@ class management extends Component {
     handleAdd = ()=>{
         this.setState({
             show : true,
-            title:'添加书籍'
+            title:'添加书籍',
+            default:{book_name:'书名',book_author:'作者',book_price:'价格',description:'描述',url:'图片地址',fk:1}
         })
     }
     handleOK = ()=>{
@@ -129,7 +130,7 @@ class management extends Component {
             width:50,
             render:(text,record)=>{
                 return(<div><span style={{cursor:'pointer',color:'#5B00FF'}} onClick={this.handleChange.bind(this,record)}>修改</span><Popconfirm title="确定要删除此书籍么？" okText="确定" cancelText="取消" onConfirm={this.handleDelete.bind(this,record)}>
-                <span style={{cursor:'pointer',color:'#5B00FF'}}>删除</span>
+                <span style={{cursor:'pointer',color:'#5B00FF',marginLeft:'10px'}}>删除</span>
               </Popconfirm>,</div>)
             }
         }]
