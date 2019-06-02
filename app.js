@@ -59,7 +59,6 @@ app.all('*', function(req, res, next) {
           return
         })
       })
-
       //注册的后台接口
       app.post('/register',(req,res)=>{
         const uname = req.body.uname;
@@ -129,7 +128,6 @@ app.all('*', function(req, res, next) {
           }
         })
       })
-
 //使用路由器
 //把用户路由器挂载到/user下
 app.use('/login',user);
