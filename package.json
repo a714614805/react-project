@@ -9,7 +9,7 @@
     "lazy-load-component": "^1.1.5",
     "moment": "^2.24.0",
     "mysql": "^2.17.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-router": "^5.0.0",
