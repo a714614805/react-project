@@ -7,7 +7,7 @@
     "antd": "^3.16.2",
     "axios": "^0.18.0",
     "lazy-load-component": "^1.1.5",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "mysql": "^2.17.1",
     "node-sass": "^4.12.0",
     "react": "^16.8.2",
